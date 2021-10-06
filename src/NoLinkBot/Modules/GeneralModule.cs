@@ -91,9 +91,9 @@ namespace NoLinkBot.Modules
 
 			StringBuilder sb = new StringBuilder();
 			embed.AddField($"{Program._config.Prefix}help", "shows this message");
-			embed.AddField($"{Program._config.Prefix}disallow", "disallow a user to send links");
-			embed.AddField($"{Program._config.Prefix}allow", "allow a user to send links again");
-			embed.AddField($"{Program._config.Prefix}status", "get the allowed/disallowed status from the target user");
+			embed.AddField($"{Program._config.Prefix}disallow <user>", "disallow a user to send links");
+			embed.AddField($"{Program._config.Prefix}allow <user>", "allow a user to send links again");
+			embed.AddField($"{Program._config.Prefix}status <user>", "get the allowed/disallowed status from the target user");
 			embed.AddField($"{Program._config.Prefix}list", "list all the users that are currently not allowed to send links");
 			embed.WithColor(new Color(0, 125, 255));
 
