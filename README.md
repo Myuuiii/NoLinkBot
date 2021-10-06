@@ -1,5 +1,5 @@
 # NoLinkBot
-
+A very simple bot that allows Administrators of a Discord server to block certain users from sending links. No database setup. 
 
 ## Prefix: `nlb!`
 
