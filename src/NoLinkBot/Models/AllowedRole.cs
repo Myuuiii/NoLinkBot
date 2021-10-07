@@ -4,6 +4,7 @@ namespace NoLinkBot.Models
 {
 	public class AllowedRole
 	{
+		public AllowedRole() { }
 		public AllowedRole(SocketRole role)
 		{
 			this.Id = role.Id;
