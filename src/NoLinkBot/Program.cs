@@ -29,6 +29,8 @@ namespace NoLinkBot
 			await _client.StartAsync();
 			await _client.SetGameAsync($"all active channels", null, ActivityType.Listening);
 
+			await _client.DownloadUsersAsync(_client.Guilds);
+
 			_commandHandler = new CommandHandler(_client, _config);
 
 			_client.MessageReceived += HandleMessage;

@@ -10,6 +10,7 @@ namespace NoLinkBot.Models
 		public string Token { get; set; }
 		public string Prefix { get; set; }
 		public List<RestrictedUser> RestrictedUsers { get; set; } = new List<RestrictedUser> { };
+		public List<AllowedRole> AllowedRoles { get; set; } = new List<AllowedRole>();
 
 		public static NoLinkBotConfiguration LoadConfig()
 		{

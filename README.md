@@ -19,3 +19,12 @@ retrieves the allowed/disallowed status of a user
 
 ## `nlb!list` 
 retrieves a list of all the users that are prohibited from sending links
+
+## `nlb!addrole <roleid/role name>`
+adds a role to the list of roles that, if assigned to a user, can execute commands
+
+## `nlb!removerole <roleid/role name>`
+removes a role from the list of roles that, if assigned to a user, can execute commands
+
+## `nlb!listroles`
+retrieves a list of all the roles that can execute commands
