@@ -91,60 +91,54 @@ namespace NoLinkBot.Modules
 		}
 
 		[Command("addrole", RunMode = RunMode.Async)]
+		[RequireUserPermission(GuildPermission.Administrator)]
 		public async Task AddRole([Remainder] SocketRole role)
 		{
-			if (await Helpers.CheckUserPermission(Context))
+			if (!Program._config.AllowedRoles.Any(r => r.Id == role.Id))
 			{
-				if (!Program._config.AllowedRoles.Any(r => r.Id == role.Id))
-				{
-					Program._config.AllowedRoles.Add(new AllowedRole(role));
-					Program._config.Save();
-					await Context.Channel.SendMessageAsync("The role has been added to the moderation roles");
-				}
-				else
-				{
-					await Context.Channel.SendMessageAsync("This role has already been added to the moderation roles");
-				}
+				Program._config.AllowedRoles.Add(new AllowedRole(role));
+				Program._config.Save();
+				await Context.Channel.SendMessageAsync("The role has been added to the moderation roles");
+			}
+			else
+			{
+				await Context.Channel.SendMessageAsync("This role has already been added to the moderation roles");
 			}
 		}
 
 		[Command("removerole", RunMode = RunMode.Async)]
+		[RequireUserPermission(GuildPermission.Administrator)]
 		public async Task RemoveRole([Remainder] SocketRole role)
 		{
-			if (await Helpers.CheckUserPermission(Context))
+			if (Program._config.AllowedRoles.Any(r => r.Id == role.Id))
 			{
-				if (Program._config.AllowedRoles.Any(r => r.Id == role.Id))
-				{
-					Program._config.AllowedRoles.Remove(Program._config.AllowedRoles.Single(r => r.Id == role.Id));
-					Program._config.Save();
-					await Context.Channel.SendMessageAsync("The role has been removed from the moderation roles");
-				}
-				else
-				{
-					await Context.Channel.SendMessageAsync("That role could not be found in the moderation roles");
-				}
+				Program._config.AllowedRoles.Remove(Program._config.AllowedRoles.Single(r => r.Id == role.Id));
+				Program._config.Save();
+				await Context.Channel.SendMessageAsync("The role has been removed from the moderation roles");
+			}
+			else
+			{
+				await Context.Channel.SendMessageAsync("That role could not be found in the moderation roles");
 			}
 		}
 
 		[Command("listroles", RunMode = RunMode.Async)]
+		[RequireUserPermission(GuildPermission.Administrator)]
 		public async Task ListRoles()
 		{
-			if (await Helpers.CheckUserPermission(Context))
+			EmbedBuilder embed = new EmbedBuilder();
+			embed.WithTitle("Moderation Roles for NoLinkBot");
+
+			StringBuilder sb = new StringBuilder();
+
+			foreach (AllowedRole ar in Program._config.AllowedRoles)
 			{
-				EmbedBuilder embed = new EmbedBuilder();
-				embed.WithTitle("Moderation Roles for NoLinkBot");
-
-				StringBuilder sb = new StringBuilder();
-
-				foreach (AllowedRole ar in Program._config.AllowedRoles)
-				{
-					sb.AppendLine($"- [**{ar.Id}**] -> **{ar.Name}**");
-				}
-
-				embed.WithDescription(sb.ToString());
-				embed.WithColor(new Color(245, 135, 80));
-				await Context.Channel.SendMessageAsync(null, false, embed.Build());
+				sb.AppendLine($"- [**{ar.Id}**] -> **{ar.Name}**");
 			}
+
+			embed.WithDescription(sb.ToString());
+			embed.WithColor(new Color(245, 135, 80));
+			await Context.Channel.SendMessageAsync(null, false, embed.Build());
 		}
 
 		[Command("help", RunMode = RunMode.Async)]
